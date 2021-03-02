@@ -10,7 +10,7 @@ ADD clean.sh /clean.sh
 ADD import_mysql_testlink_data.sh /import_mysql_testlink_data.sh
 RUN chmod 755 /testlink.sh /clean.sh /import_mysql_testlink_data.sh
  
-COPY . /app
+
 
 WORKDIR /app
 ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL-VERSION}.tar.gz ./${TL-VERSION}.tar.gz
