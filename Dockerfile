@@ -14,13 +14,13 @@ COPY . /app
 
 WORKDIR /app
 ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./testlink-code-${TL_VERSION}.tar.gz
-RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp
-RUN mv /tmp/testlink-code-${TL_VERSION} /app/testlink 
-RUN cp /app/config_db.inc.php /app/testlink/config_db.inc.php
-RUN mkdir -p /var/testlink/logs
-RUN mkdir -p /var/testlink/upload_area
-RUN chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php 
-RUN rm -fr /tmp/*
+RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp &&\
+ mv /tmp/testlink-code-${TL_VERSION} /app/testlink &&\
+ cp /app/config_db.inc.php /app/testlink/config_db.inc.php &&\
+ mkdir -p /var/testlink/logs &&\
+ mkdir -p /var/testlink/upload_area &&\
+ chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php &&\
+ rm -fr /tmp/*
 
 EXPOSE 80 3306
 CMD ["/testlink.sh"]
