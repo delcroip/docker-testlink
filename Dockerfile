@@ -19,7 +19,7 @@ RUN mv /tmp/testlink-code-${TL_VERSION} /app/testlink && rm -fr testlink-code-${
 RUN mkdir -p /var/testlink/logs
 RUN mkdir -p /var/testlink/upload_area
 RUN chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php 
-RUN cp config_db.inc.php /app/testlink/
+RUN cp config_db.inc.php /app/testlink/config_db.inc.php
 
 EXPOSE 80 3306
 CMD ["/testlink.sh"]
