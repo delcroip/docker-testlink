@@ -9,9 +9,9 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
     echo "=> Installing MySQL ..."
     mysql_install_db > /dev/null 2>&1
     echo "=> Done!"
-    echo "=> Import MySQL Testlink Data"
-    /import_mysql_testlink_data.sh $MYSQL_PASS
-    echo "=> Done!"
+#    echo "=> Import MySQL Testlink Data"
+#    /import_mysql_testlink_data.sh $MYSQL_PASS
+#    echo "=> Done!"
     echo "=> Set MySQL User password into testlink"
     sed -i "s/testlink_pass/$MYSQL_PASS/g" /app/testlink/config_db.inc.php
     echo "=> Done!"
