@@ -1,6 +1,6 @@
 FROM quay.io/oouyang/lamp
 MAINTAINER Equipe Webtop <webtop@webadeo.net>
-
+ENV TL-VERSION=1.9.20
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && apt-get -y install php5-gd
 
@@ -9,11 +9,13 @@ ADD testlink.sh /testlink.sh
 ADD clean.sh /clean.sh
 ADD import_mysql_testlink_data.sh /import_mysql_testlink_data.sh
 RUN chmod 755 /testlink.sh /clean.sh /import_mysql_testlink_data.sh
-
+ 
 COPY . /app
+
 WORKDIR /app
-RUN tar -zxvf testlink-1.9.13.tar.gz && rm -f testlink-1.9.13.tar.gz
-RUN mv testlink-1.9.13 testlink && rm -fr testlink-1.9.13
+ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL-VERSION}.tar.gz
+RUN tar -zxvf ${TL-VERSION}.tar.gz && rm -f ${TL-VERSION}.tar.gz
+RUN mv ${TL-VERSION} testlink && rm -fr ${TL-VERSION}
 RUN mkdir -p /var/testlink/logs
 RUN mkdir -p /var/testlink/upload_area
 RUN chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php5 testlink/gui/templates_c
