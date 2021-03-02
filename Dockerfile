@@ -1,6 +1,6 @@
 FROM mattrayner/lamp:build-189-1604-php7
 
-ENV TL-VERSION=1.9.20
+ENV TL_VERSION=1.9.20
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && apt-get -y install php-gd
 
@@ -13,9 +13,9 @@ COPY . /app
 
 
 WORKDIR /app
-COPY https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL-VERSION}.tar.gz ./${TL-VERSION}.tar.gz
-RUN tar -zxvf ${TL-VERSION}.tar.gz && rm -f ${TL-VERSION}.tar.gz
-RUN mv ${TL-VERSION} testlink && rm -fr ${TL-VERSION}
+COPY https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./${TL_VERSION}.tar.gz
+RUN tar -zxvf ${TL_VERSION}.tar.gz && rm -f ${TL_VERSION}.tar.gz
+RUN mv ${TL_VERSION} testlink && rm -fr ${TL_VERSION}
 RUN mkdir -p /var/testlink/logs
 RUN mkdir -p /var/testlink/upload_area
 RUN chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php5 testlink/gui/templates_c
