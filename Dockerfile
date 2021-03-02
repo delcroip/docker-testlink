@@ -13,8 +13,8 @@ COPY . /app
 
 
 WORKDIR /app
-ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./${TL_VERSION}.tar.gz
-RUN tar -zxvf ${TL_VERSION}.tar.gz && rm -f ${TL_VERSION}.tar.gz
+ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./testlink-code-${TL_VERSION}.tar.gz
+RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz && rm -f testlink-code-${TL_VERSION}.tar.gz
 RUN mv testlink-code-${TL_VERSION} testlink && rm -fr testlink-code-${TL_VERSION}
 RUN mkdir -p /var/testlink/logs
 RUN mkdir -p /var/testlink/upload_area
