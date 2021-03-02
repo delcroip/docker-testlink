@@ -2,7 +2,7 @@ FROM mattrayner/lamp:build-189-1604-php7
 
 ENV TL-VERSION=1.9.20
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get -y install php5-gd
+RUN apt-get -y update && apt-get -y install php-gd
 
 RUN rm -fr /app && mkdir -p /app
 ADD testlink.sh /testlink.sh
