@@ -9,9 +9,6 @@ if [[ ! -d $VOLUME_HOME/mysql ]]; then
     echo "=> Installing MySQL ..."
     mysql_install_db > /dev/null 2>&1
     echo "=> Done!"
-    echo "=> Create MySQL Admin User"
-    /create_mysql_admin_user.sh
-    echo "=> Done!"
     echo "=> Import MySQL Testlink Data"
     /import_mysql_testlink_data.sh $MYSQL_PASS
     echo "=> Done!"
