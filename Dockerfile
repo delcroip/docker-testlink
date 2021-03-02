@@ -4,12 +4,12 @@ ENV TL-VERSION=1.9.20
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update && apt-get -y install php-gd
 
-RUN rm -fr /app && mkdir -p /app
+
 ADD testlink.sh /testlink.sh
 ADD clean.sh /clean.sh
 ADD import_mysql_testlink_data.sh /import_mysql_testlink_data.sh
 RUN chmod 755 /testlink.sh /clean.sh /import_mysql_testlink_data.sh
- 
+COPY . /app
 
 
 WORKDIR /app
