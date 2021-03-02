@@ -16,6 +16,7 @@ WORKDIR /app
 ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./testlink-code-${TL_VERSION}.tar.gz
 RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp
 RUN mv /tmp/testlink-code-${TL_VERSION} ./testlink && rm -fr testlink-code-${TL_VERSION} && rm -f testlink-code-${TL_VERSION}.tar.gz
+RUN ls ./testlink
 RUN mkdir -p /var/testlink/logs
 RUN mkdir -p /var/testlink/upload_area
 RUN chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php testlink/gui/templates_c
