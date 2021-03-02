@@ -1,0 +1,20 @@
+version: '2'
+services:
+  testlink:
+    build:
+      context: https://github.com/delcroip/docker-testlink.git
+      args:
+        MYSQL_PASS=testlink_pass
+    ports:
+      - '680:80'
+    environment:
+      - MYSQL_PASS=testlink_pass
+      - TL-VERSION=1.9.20
+    volumes:
+      - 'mariadb_data:/var/lib/mysql'
+      - 'testlink_data:/app'
+volumes:
+  mariadb_data:
+    driver: local
+  testlink_data:
+    driver: local
