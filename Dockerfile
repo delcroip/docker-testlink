@@ -84,9 +84,10 @@ RUN rm -rf /usr/src/*
 ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./testlink-code-${TL_VERSION}.tar.gz
 RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp &&\
  mv /tmp/testlink-code-${TL_VERSION}/* /var/www/html/ &&\
- cp /app/config_db.inc.php /app/testlink/config_db.inc.php &&\
  mkdir -p /var/testlink/logs &&\
  mkdir -p /var/testlink/upload_area &&\
  chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php &&\
  rm -fr /tmp/*
+ 
+ADD ./config_db.inc.php /var/www/html/config_db.inc.php
 
