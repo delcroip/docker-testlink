@@ -1,26 +1,92 @@
-FROM mattrayner/lamp:build-189-1604-php7
+# from https://github.com/sprintcube/docker-compose-lamp
+FROM php:7.4.2-apache-buster
 
-ENV TL_VERSION=1.9.20
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get -y install php-gd
+# Surpresses debconf complaints of trying to install apt packages interactively
+# https://github.com/moby/moby/issues/4032#issuecomment-192327844
+ARG TL_VERSION=1.9.20 
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Update
+RUN apt-get -y update --fix-missing && \
+    apt-get upgrade -y && \
+    apt-get --no-install-recommends install -y apt-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 
-ADD testlink.sh /testlink.sh
-ADD clean.sh /clean.sh
-ADD import_mysql_testlink_data.sh /import_mysql_testlink_data.sh
-RUN chmod 755 /testlink.sh /clean.sh /import_mysql_testlink_data.sh
-COPY . /app
+# Install useful tools and install important libaries
+RUN apt-get -y update && \
+    apt-get -y --no-install-recommends install nano wget \
+dialog \
+libsqlite3-dev \
+libsqlite3-0 && \
+    apt-get -y --no-install-recommends install default-mysql-client \
+zlib1g-dev \
+libzip-dev \
+libicu-dev && \
+    apt-get -y --no-install-recommends install --fix-missing apt-utils \
+build-essential \
+git \
+curl \
+libonig-dev && \ 
+    apt-get -y --no-install-recommends install --fix-missing libcurl4 \
+libcurl4-openssl-dev \
+zip \
+openssl && \
+    rm -rf /var/lib/apt/lists/* && \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install xdebug
+RUN pecl install xdebug-2.8.0 && \
+    docker-php-ext-enable xdebug
+
+# Install redis
+RUN pecl install redis-5.1.1 && \
+    docker-php-ext-enable redis
+
+# Install imagick 
+RUN apt-get update && \
+    apt-get -y --no-install-recommends install --fix-missing libmagickwand-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick
+
+# Other PHP7 Extensions
+
+RUN docker-php-ext-install pdo_mysql && \
+    docker-php-ext-install pdo_sqlite && \
+    docker-php-ext-install mysqli && \
+    docker-php-ext-install curl && \
+    docker-php-ext-install tokenizer && \
+    docker-php-ext-install json && \
+    docker-php-ext-install zip && \
+    docker-php-ext-install -j$(nproc) intl && \
+    docker-php-ext-install mbstring && \
+    docker-php-ext-install gettext && \
+    docker-php-ext-install exif
 
 
-WORKDIR /app
+# Install Freetype 
+RUN apt-get -y update && \
+    apt-get --no-install-recommends install -y libfreetype6-dev \
+libjpeg62-turbo-dev \
+libpng-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg && \
+    docker-php-ext-install gd
+
+# Enable apache modules
+RUN a2enmod rewrite headers
+
+# Cleanup
+RUN rm -rf /usr/src/*
+
+# install testlink
 ADD https://github.com/TestLinkOpenSourceTRMS/testlink-code/archive/${TL_VERSION}.tar.gz ./testlink-code-${TL_VERSION}.tar.gz
 RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp &&\
- mv /tmp/testlink-code-${TL_VERSION} /app/testlink &&\
+ mv /tmp/testlink-code-${TL_VERSION}/* /var/www/html/ &&\
  cp /app/config_db.inc.php /app/testlink/config_db.inc.php &&\
  mkdir -p /var/testlink/logs &&\
  mkdir -p /var/testlink/upload_area &&\
  chmod 777 /var/testlink/logs /var/testlink/upload_area /var/lib/php &&\
  rm -fr /tmp/*
 
-EXPOSE 80 3306
-CMD ["/testlink.sh"]
