@@ -86,6 +86,7 @@ RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp &&\
  mv /tmp/testlink-code-${TL_VERSION}/* /var/www/html/ &&\
  mkdir -p /var/testlink/logs &&\
  mkdir -p /var/testlink/upload_area &&\
+ chmod 777 /var/www/html/gui/templates_c /var/testlink/logs/ /var/testlink/upload_area/&&\
  rm -fr /tmp/*
  
 ADD ./config_db.inc.php /var/www/html/config_db.inc.php
