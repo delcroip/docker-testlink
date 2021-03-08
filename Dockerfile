@@ -90,5 +90,5 @@ RUN tar -zxvf testlink-code-${TL_VERSION}.tar.gz -C /tmp &&\
  rm -fr /tmp/*
  
 ADD ./config_db.inc.php /var/www/html/config_db.inc.php
-ADD ./config.inc.php /var/www/html/config.inc.php
+ADD ./custom_config.inc.php /var/www/html/custom_config.inc.php
 
