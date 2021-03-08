@@ -41,4 +41,4 @@ $g_return_path_email  = 'support@openimis.org';
 //
 // Uncomment this if you want dBug() display info
 // define('DBUG_ON',1);
-"custom_config.inc.php" [rea
+
