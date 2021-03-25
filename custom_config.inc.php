@@ -31,6 +31,10 @@ $g_tl_admin_email     = 'support@openimis.org'; # for problem/error notification
 $g_from_email         = 'support@openimis.org';  # email sender
 $g_return_path_email  = 'support@openimis.org';
 
+
+$tlCfg->sessionInactivityTimeout = 300;
+
+
 // *******************************************************************************
 // *******************************************************************************
 // Hint: After doing configuration changes, clean you Browser's cookies and cache
