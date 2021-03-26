@@ -33,6 +33,12 @@ $g_return_path_email  = 'support@openimis.org';
 
 
 $tlCfg->sessionInactivityTimeout = 300;
+// server should keep session data for 
+ini_set('session.gc_maxlifetime', 300*60); // 300 minutes
+
+// each client should remember their session id for
+session_set_cookie_params(300*60); // 300 minutes
+
 
 
 // *******************************************************************************
